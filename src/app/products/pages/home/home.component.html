@@ -1,0 +1,22 @@
+<div class="flex">
+    <div class="w-80">
+        <app-categories/>
+    </div>
+    <div class="flex flex-col w-full">
+        <div class="grid grid-cols-3 gap-8 w-full">
+            @for (item of productsFilter(); track $index) {
+                <app-product
+                  [product]="item"
+                  (addToCart)="addToCart($event)"/>
+            }
+        </div>
+        <div class="flex justify-center">
+            <app-paginator
+                #paginator 
+                [totalItems]="products().length"
+                [pageSize]="pageSize"
+                (pageChange)="onPageChange($event)">
+            </app-paginator>
+        </div>
+    </div>
+</div>
