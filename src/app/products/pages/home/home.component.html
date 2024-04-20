@@ -3,12 +3,19 @@
         <app-categories/>
     </div>
     <div class="flex flex-col w-full">
-        <div class="grid grid-cols-3 gap-8 w-full">
-            @for (item of productsFilter(); track $index) {
-                <app-product
-                  [product]="item"
-                  (addToCart)="addToCart($event)"/>
-            }
+        <div class="flex flex-col mt-7">
+            <div class="flex justify-between items-center mx-4">
+                <div></div>
+                <h3 >Page {{pageNumber}} of {{pageTotal}}</h3>
+                <h5 >Total items {{products().length}} </h5>
+            </div>
+            <div class="grid grid-cols-3 gap-8 w-full mt-5">
+                @for (item of productsFilter(); track $index) {
+                    <app-product
+                      [product]="item"
+                      (addToCart)="addToCart($event)"/>
+                }
+            </div>
         </div>
         <div class="flex justify-center">
             <app-paginator

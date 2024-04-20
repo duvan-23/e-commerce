@@ -1,5 +1,15 @@
-
-mat-mdc-tooltip-trigger {
-    display: none !important;
+mat-paginator{
+    background-color: transparent;
+    color:black;
+    font-size: medium6
 }
-  
+::ng-deep .mat-mdc-paginator-navigation-next .mat-mdc-paginator-icon{
+    height: 26px;
+    width: 26px;
+    fill: rgb(31 41 55 / var(--tw-bg-opacity)) !important;
+  } 
+::ng-deep .mat-mdc-paginator-navigation-previous .mat-mdc-paginator-icon{
+    height: 26px;
+    width: 26px;
+    fill: rgb(31 41 55 / var(--tw-bg-opacity)) !important;
+  } 

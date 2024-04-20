@@ -18,10 +18,18 @@ export class PaginatorComponent {
   constructor(private paginatorIntl: MatPaginatorIntl) {}
 
   ngAfterViewInit() {
+    this.paginatorIntl.getRangeLabel = this.getRangeLabel.bind(this);
     this.paginatorIntl.previousPageLabel = ''; 
     this.paginatorIntl.nextPageLabel = ''; 
+    this.paginator._changePageSize(this.paginator.pageSize);
+
   }
-  
+
+  getRangeLabel(page: number, pageSize: number, length: number): string {
+    const total = Math.ceil(length / this.pageSize);
+    return `Page ${page+1} of ${total}`;
+  }
+
   pageChanged(event: PageEvent): void {
     this.pageChange.emit(event.pageIndex + 1);
   }

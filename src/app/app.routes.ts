@@ -12,7 +12,11 @@ export const routes: Routes = [
             },{
                 path: 'about',
                 loadComponent:()=> import('./about/about.component').then(c => c.AboutComponent)
-            }
+            },
+            {
+               path: 'product/:id',
+               loadComponent: () => import('./products/pages/product-detail/product-detail.component').then(c => c.ProductDetailComponent)
+            },
         ]
     },
     {

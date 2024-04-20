@@ -4,6 +4,7 @@ import { ProductsService } from '../../../shared/services/products.service';
 import { ProductComponent } from '../../components/product/product.component';
 import { Product } from '../../../shared/models/product';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
+import { CartService } from '../../../shared/services/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -17,13 +18,16 @@ export class HomeComponent {
   products= signal<Product[]>([]);
   productsFilter= signal<Product[]>([]);
   pageSize = 9; 
-
+  pageNumber =1;
+  pageTotal = 0;
+  private cartService = inject(CartService);
   ngOnInit(){
     this.productervice.getProducts().subscribe({
       next:(data)=>{
         this.products.set(data);
         this.productsFilter.set(data);
-        this.filterData(1);
+        this.filterData(this.pageNumber);
+        this.pageTotal = Math.ceil(this.products().length / this.pageSize);
       },
       error:(e)=>{
         console.log(e);
@@ -32,8 +36,7 @@ export class HomeComponent {
   }
 
   addToCart(product: Product) {
-    // console.log(product);
-    // this.cartService.addToCart(product);
+    this.cartService.addToCart(product);
   }
 
   onPageChange(pageNumber: number): void {
@@ -41,6 +44,7 @@ export class HomeComponent {
   }
 
   filterData(pageNumber: number){
+    this.pageNumber = pageNumber;
     let num = this.products().length;
     let data= [];
     for (let index = 0; index < num; index++) {

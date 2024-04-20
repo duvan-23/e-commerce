@@ -1,0 +1,8 @@
+.line{
+    border-color: rgb(128, 125, 125);
+    border-style:solid;
+}
+.lineTotal{
+    border-color: black;
+    border-style:dashed;
+} 
