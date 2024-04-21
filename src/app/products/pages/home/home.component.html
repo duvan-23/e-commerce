@@ -1,6 +1,8 @@
 <div class="flex">
     <div class="w-80">
         <app-categories 
+            [maxPrice]="maxPrice"
+            (searchPrice)="searchPrice($event)"
             (searchCategories)="searchCategories($event)"
             (searchName)="searchName($event)"/>
     </div>

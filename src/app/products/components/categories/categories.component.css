@@ -1,4 +1,4 @@
-md-divider {
-    border-width: 1px;
-    border-style: solid;
+mat-slider {
+    width: 90%;  
 }
+

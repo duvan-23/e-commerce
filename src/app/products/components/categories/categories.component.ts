@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Output, QueryList, ViewChildren, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { CategoryService } from '../../../shared/services/category.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProductsService } from '../../../shared/services/products.service';
 import { Category } from '../../../shared/models/category';
+import {MatSliderModule} from '@angular/material/slider';
+
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, MatSliderModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
@@ -15,8 +16,16 @@ export class CategoriesComponent {
 
   @ViewChildren('checkbox') checkboxes!: QueryList<any>;
   @ViewChildren('checkboxAll') checkboxAll!: any;
+
+  @ViewChild('startInput') startInput: any;
+  @ViewChild('endInput') endInput: any;
+  
   @Output() searchName = new EventEmitter<String>();
   @Output() searchCategories = new EventEmitter<Array<number>>();
+  @Output() searchPrice = new EventEmitter<Array<number>>();
+
+  @Input() maxPrice!:number;
+  
   categoryService = inject(CategoryService);
   category!:Category[];
   categoriesOptions: boolean= false;
@@ -69,6 +78,19 @@ export class CategoriesComponent {
         }
       }
     }
+  }
 
+  formatLabel(value: number): string {
+    if (value >= 1000) {
+      return value  + 'k';
+    }
+
+    return `${value}`;
+  }
+
+  rangePrice(){
+    const minPrice = this.startInput.nativeElement.value;
+    const maxPrice = this.endInput.nativeElement.value;
+    this.searchPrice.emit([minPrice, maxPrice]);
   }
 }

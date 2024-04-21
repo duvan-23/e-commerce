@@ -21,15 +21,19 @@ export class HomeComponent {
   pageNumber = signal(1);
   pageTotal = signal(0);
   name = signal("");
+  categories = signal([0]);
+  maxPrice = 0;
   private cartService = inject(CartService);
  
   ngOnInit(){
     this.productService.getProducts().subscribe({
       next:(data)=>{
+        this.maxPrice = Math.max(...data.map(o => +o.price));
         this.productService.products.set(data);
         this.productService.productsFilterName.set(data);
         this.productService.filterDataByPage(this.pageNumber());
         this.productService.pageTotal.set(Math.ceil(this.products().length / this.pageSize));
+        this.productService.filterDataByPrice(0,this.maxPrice);
         this.productService.filterDataByCategory([0]);
         this.productService.filterDataByName("");
         
@@ -66,7 +70,18 @@ export class HomeComponent {
   }
 
   searchCategories(id:Array<number>){
+    this.categories.set(id);
     this.productService.filterDataByCategory(id);
+    this.productService.filterDataByName(this.name());
+    this.productsFilter.set(this.productService.productsFilterPage());
+    this.pageNumber.set(this.productService.pageNumber());
+    this.pageTotal.set(this.productService.pageTotal());
+    this.products.set(this.productService.productsFilterName());
+  }
+
+  searchPrice(priceRange:Array<number>){
+    this.productService.filterDataByPrice(+priceRange[0],+priceRange[1]);
+    this.productService.filterDataByCategory(this.categories());
     this.productService.filterDataByName(this.name());
     this.productsFilter.set(this.productService.productsFilterPage());
     this.pageNumber.set(this.productService.pageNumber());

@@ -13,6 +13,7 @@ export class ProductsService {
 
 
   products= signal<Product[]>([]);
+  productsFilterPrice= signal<Product[]>([]);
   productsFilterCategory= signal<Product[]>([]);
   productsFilterName= signal<Product[]>([]);
   productsFilterPage= signal<Product[]>([]);
@@ -58,14 +59,25 @@ export class ProductsService {
   }
 
   filterDataByCategory(id:Array<number>){
-    let num = this.products().length;
+    let num = this.productsFilterPrice().length;
     let data= [];
     for (let index = 0; index < num; index++) {
-      if(id.includes(this.products()[index].id_category) || id[0] == 0){
-        data.push(this.products()[index]);
+      if(id.includes(this.productsFilterPrice()[index].id_category) || id[0] == 0){
+        data.push(this.productsFilterPrice()[index]);
       }
     }
     this.productsFilterCategory.set(data);
+    this.filterDataByPage(1);
+  }
+  filterDataByPrice(minPrice:number, maxPrice:number){
+    let num = this.products().length;
+    let data= [];
+    for (let index = 0; index < num; index++) {
+      if(this.products()[index].price >= minPrice &&  this.products()[index].price <=maxPrice){
+        data.push(this.products()[index]);
+      }
+    }
+    this.productsFilterPrice.set(data);
     this.filterDataByPage(1);
   }
 
