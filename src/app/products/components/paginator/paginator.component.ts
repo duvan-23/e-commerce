@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import {PageEvent, MatPaginatorModule, MatPaginator, MatPaginatorIntl} from '@angular/material/paginator';
 @Component({
   selector: 'app-paginator',
@@ -17,6 +17,11 @@ export class PaginatorComponent {
 
   constructor(private paginatorIntl: MatPaginatorIntl) {}
 
+  ngOnChanges(changes: SimpleChanges){
+    if (changes["totalItems"] && this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+  }
   ngAfterViewInit() {
     this.paginatorIntl.getRangeLabel = this.getRangeLabel.bind(this);
     this.paginatorIntl.previousPageLabel = ''; 
