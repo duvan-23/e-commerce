@@ -37,10 +37,7 @@ export class HomeComponent {
         this.productService.filterDataByCategory([0]);
         this.productService.filterDataByName("");
         
-        this.products.set(this.productService.productsFilterName());
-        this.productsFilter.set(this.productService.productsFilterPage());
-        this.pageNumber.set(this.productService.pageNumber());
-        this.pageTotal.set(this.productService.pageTotal());
+        this.setValues();
       },
       error:(e)=>{
         console.log(e);
@@ -63,26 +60,24 @@ export class HomeComponent {
   searchName(name:any){
     this.name.set(name);
     this.productService.filterDataByName(name);
-    this.productsFilter.set(this.productService.productsFilterPage());
-    this.pageNumber.set(this.productService.pageNumber());
-    this.pageTotal.set(this.productService.pageTotal());
-    this.products.set(this.productService.productsFilterName());
+    this.setValues();
   }
 
   searchCategories(id:Array<number>){
     this.categories.set(id);
     this.productService.filterDataByCategory(id);
     this.productService.filterDataByName(this.name());
-    this.productsFilter.set(this.productService.productsFilterPage());
-    this.pageNumber.set(this.productService.pageNumber());
-    this.pageTotal.set(this.productService.pageTotal());
-    this.products.set(this.productService.productsFilterName());
+    this.setValues();
   }
 
   searchPrice(priceRange:Array<number>){
     this.productService.filterDataByPrice(+priceRange[0],+priceRange[1]);
     this.productService.filterDataByCategory(this.categories());
     this.productService.filterDataByName(this.name());
+    this.setValues();
+  }
+
+  setValues(){
     this.productsFilter.set(this.productService.productsFilterPage());
     this.pageNumber.set(this.productService.pageNumber());
     this.pageTotal.set(this.productService.pageTotal());

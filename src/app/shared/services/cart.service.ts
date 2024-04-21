@@ -15,6 +15,7 @@ export class CartService {
   addToCart(product: Product) {
     this.cart.update(state => [...state, product])
   }
+  
   removeToCart(product: Product) {
     const index = this.cart().findIndex(item => item.id === product.id);
     if (index !== -1) {

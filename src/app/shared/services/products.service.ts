@@ -67,7 +67,6 @@ export class ProductsService {
       }
     }
     this.productsFilterCategory.set(data);
-    this.filterDataByPage(1);
   }
   filterDataByPrice(minPrice:number, maxPrice:number){
     let num = this.products().length;
@@ -78,7 +77,6 @@ export class ProductsService {
       }
     }
     this.productsFilterPrice.set(data);
-    this.filterDataByPage(1);
   }
 
   
