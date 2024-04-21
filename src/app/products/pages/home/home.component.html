@@ -1,15 +1,17 @@
 <div class="flex">
     <div class="w-80">
-        <app-categories/>
+        <app-categories 
+            (searchCategories)="searchCategories($event)"
+            (searchName)="searchName($event)"/>
     </div>
     <div class="flex flex-col w-full">
-        <div class="flex flex-col mt-7">
+        <div class="flex flex-col mt-5">
             <div class="flex justify-between items-center mx-4">
                 <div></div>
-                <h3 >Page {{pageNumber}} of {{pageTotal}}</h3>
+                <h3 >Page {{pageNumber()}} of {{pageTotal()}}</h3>
                 <h5 >Total items {{products().length}} </h5>
             </div>
-            <div class="grid grid-cols-3 gap-8 w-full mt-5">
+            <div class="grid grid-cols-3 gap-8 w-full mt-2">
                 @for (item of productsFilter(); track $index) {
                     <app-product
                       [product]="item"
@@ -18,8 +20,7 @@
             </div>
         </div>
         <div class="flex justify-center">
-            <app-paginator
-                #paginator 
+            <app-paginator 
                 [totalItems]="products().length"
                 [pageSize]="pageSize"
                 (pageChange)="onPageChange($event)">

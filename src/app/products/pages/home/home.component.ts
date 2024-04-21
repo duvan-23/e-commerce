@@ -14,27 +14,35 @@ import { CartService } from '../../../shared/services/cart.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  productervice =inject(ProductsService);
-  products= signal<Product[]>([]);
+  productService =inject(ProductsService);
+  products=signal<Product[]>([]);
   productsFilter= signal<Product[]>([]);
-  pageSize = 9; 
-  pageNumber =1;
-  pageTotal = 0;
+  pageSize = this.productService.pageSize; 
+  pageNumber = signal(1);
+  pageTotal = signal(0);
+  name = signal("");
   private cartService = inject(CartService);
+ 
   ngOnInit(){
-    this.productervice.getProducts().subscribe({
+    this.productService.getProducts().subscribe({
       next:(data)=>{
-        this.products.set(data);
-        this.productsFilter.set(data);
-        this.filterData(this.pageNumber);
-        this.pageTotal = Math.ceil(this.products().length / this.pageSize);
+        this.productService.products.set(data);
+        this.productService.productsFilterName.set(data);
+        this.productService.filterDataByPage(this.pageNumber());
+        this.productService.pageTotal.set(Math.ceil(this.products().length / this.pageSize));
+        this.productService.filterDataByCategory([0]);
+        this.productService.filterDataByName("");
+        
+        this.products.set(this.productService.productsFilterName());
+        this.productsFilter.set(this.productService.productsFilterPage());
+        this.pageNumber.set(this.productService.pageNumber());
+        this.pageTotal.set(this.productService.pageTotal());
       },
       error:(e)=>{
         console.log(e);
       }
     });
   }
-
   addToCart(product: Product) {
     this.cartService.addToCart(product);
   }
@@ -44,14 +52,25 @@ export class HomeComponent {
   }
 
   filterData(pageNumber: number){
-    this.pageNumber = pageNumber;
-    let num = this.products().length;
-    let data= [];
-    for (let index = 0; index < num; index++) {
-      if(index < (pageNumber*this.pageSize) && ((index>=((pageNumber*this.pageSize)-this.pageSize))|| ((pageNumber*this.pageSize)-this.pageSize)<1)){
-        data.push(this.products()[index]);
-      }
-    }
-    this.productsFilter.set(data);
+    this.productService.filterDataByPage(pageNumber);
+    this.productsFilter.set(this.productService.productsFilterPage());
+    this.pageNumber.set(this.productService.pageNumber());
+  }
+  searchName(name:any){
+    this.name.set(name);
+    this.productService.filterDataByName(name);
+    this.productsFilter.set(this.productService.productsFilterPage());
+    this.pageNumber.set(this.productService.pageNumber());
+    this.pageTotal.set(this.productService.pageTotal());
+    this.products.set(this.productService.productsFilterName());
+  }
+
+  searchCategories(id:Array<number>){
+    this.productService.filterDataByCategory(id);
+    this.productService.filterDataByName(this.name());
+    this.productsFilter.set(this.productService.productsFilterPage());
+    this.pageNumber.set(this.productService.pageNumber());
+    this.pageTotal.set(this.productService.pageTotal());
+    this.products.set(this.productService.productsFilterName());
   }
 }
