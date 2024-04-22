@@ -1,15 +1,21 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
 import { CategoriesComponent } from '../../components/categories/categories.component';
 import { ProductsService } from '../../../shared/services/products.service';
 import { ProductComponent } from '../../components/product/product.component';
 import { Product } from '../../../shared/models/product';
 import { PaginatorComponent } from '../../components/paginator/paginator.component';
 import { CartService } from '../../../shared/services/cart.service';
+import { MatSnackBar} from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { SnackBarComponent } from '../../components/snack-bar/snack-bar.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CategoriesComponent, ProductComponent, PaginatorComponent],
+  imports: [CategoriesComponent, ProductComponent, PaginatorComponent,MatFormFieldModule, FormsModule, MatInputModule, MatButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -24,7 +30,9 @@ export class HomeComponent {
   categories = signal([0]);
   maxPrice = 0;
   private cartService = inject(CartService);
- 
+  durationInSeconds = 3;
+  private _snackBar= inject(MatSnackBar);
+
   ngOnInit(){
     this.productService.getProducts().subscribe({
       next:(data)=>{
@@ -46,6 +54,7 @@ export class HomeComponent {
   }
   addToCart(product: Product) {
     this.cartService.addToCart(product);
+    this.openSnackBar(product.name);
   }
 
   onPageChange(pageNumber: number): void {
@@ -82,5 +91,13 @@ export class HomeComponent {
     this.pageNumber.set(this.productService.pageNumber());
     this.pageTotal.set(this.productService.pageTotal());
     this.products.set(this.productService.productsFilterName());
+  }
+  
+  openSnackBar(message:string) {
+    this._snackBar.openFromComponent(SnackBarComponent, {
+      duration: this.durationInSeconds * 1000,
+      data: {message:`Added ${message}`,icon:1},
+      panelClass: ['custom-snackbar']
+    });
   }
 }
