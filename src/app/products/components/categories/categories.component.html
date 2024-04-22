@@ -49,7 +49,7 @@
     </div>
     <div class="mt-5 mr-8 bg-gray-300 p-3">
         <h2 class="text-lg font-medium mb-2">Prices</h2>
-        <mat-slider  color="primary" min="0" [max]="maxPrice" [step]="100" showTickMarks discrete [displayWith]="formatLabel">
+        <mat-slider   min="0" [max]="maxPrice" [step]="100" showTickMarks discrete [displayWith]="formatLabel">
             <input value="0" matSliderStartThumb #startInput (input)="rangePrice()">
             <input [value]="maxPrice" matSliderEndThumb #endInput (input)="rangePrice()">
         </mat-slider>
