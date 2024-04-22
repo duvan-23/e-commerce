@@ -17,3 +17,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-weight: 400;
     font-size: medium;
 }
+
+.mat-mdc-slider .mdc-slider__tick-marks{
+    background-color: rgb(24 109 227);
+}
+.mat-mdc-slider .mdc-slider__thumb-knob{
+    --tw-bg-opacity: 1;
+    border-color: rgb(31 41 55 / var(--tw-bg-opacity))!important;
+    
+}
