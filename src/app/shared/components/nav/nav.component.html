@@ -2,9 +2,9 @@
     <div class="flex justify-between mx-8">
         <div class="flex items-center text-white">
             <img src="/assets/img/logo.webp" class="text-white mr-4  size-16 rounded-md"/>
-            <h2 class="text-2xl italic">E-commerce</h2>
+            <h2 class="text-xl italic">E-commerce</h2>
         </div>
-        <div class="hidden md:flex md:items-center ">
+        <div class="hidden md:flex md:items-center md:-ml-24">
             <a routerLink="/"
                 routerLinkActive="underline"
                 [routerLinkActiveOptions]="{exact : true}" 
@@ -20,11 +20,6 @@
                 routerLinkActive="underline"
                 class="text-white mx-4 hover:underline">
                 Services
-            </a>
-            <a routerLink="/contact"
-                routerLinkActive="underline"
-                class="text-white mx-4 hover:underline">
-                Contact
             </a>
         </div>
         <button (click)="toggleMenu()" class="block md:hidden text-white focus:outline-none ml-auto md:ml-0">
