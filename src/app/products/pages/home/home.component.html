@@ -1,5 +1,5 @@
-<div class="flex">
-    <div class="w-80">
+<div class="flex flex-col md:flex-row">
+    <div class="w-full md:w-80">
         <app-categories 
             [maxPrice]="maxPrice"
             (searchPrice)="searchPrice($event)"
@@ -13,7 +13,7 @@
                 <h3 >Page {{pageNumber()}} of {{pageTotal()}}</h3>
                 <h5 >Total items {{products().length}} </h5>
             </div>
-            <div class="grid grid-cols-3 gap-8 w-full mt-2">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8 w-full mt-2">
                 @for (item of productsFilter(); track $index) {
                     <app-product
                       [product]="item"

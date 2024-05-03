@@ -10,7 +10,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: rgb(209 213 219 / var(--tw-bg-opacity))!important;
     width: 80%!important;
     min-width: 318px!important;
-    padding-left: 10px;
+    padding-left:10px;
 }
 .custom-snackbar .mat-mdc-snack-bar-label .mdc-snackbar__label{
     color: black;
@@ -25,4 +25,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --tw-bg-opacity: 1;
     border-color: rgb(31 41 55 / var(--tw-bg-opacity))!important;
     
+}
+@media (min-width: 430px) {
+    .mat-mdc-slider{
+        margin-left: 20px!important;
+    }
+}
+@media (min-width: 768px) {
+    .mat-mdc-slider{
+        margin-left: 8px!important;
+    }
 }
